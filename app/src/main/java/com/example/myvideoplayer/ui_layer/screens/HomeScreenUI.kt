@@ -80,6 +80,7 @@ fun HomeScreenUI(modifier: Modifier = Modifier) {
                     1 -> VideosScreenUI()
                 }
             }
+            Text(text = "Home Screen")
         }
     }
 }
