@@ -1,11 +1,9 @@
 package com.example.myvideoplayer.ui_layer.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
@@ -22,19 +20,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.myvideoplayer.ui_layer.view_model.MyViewModel
 import kotlinx.coroutines.launch
 
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenUI(modifier: Modifier = Modifier) {
+fun HomeScreenUI(modifier: Modifier = Modifier,navController: NavController , viewModel: MyViewModel = hiltViewModel()) {
 
     val tabs = listOf(
         TabItem(
             name = "Folders",
             icon = Icons.Outlined.FolderSpecial
-        )
-        ,
+        ),
         TabItem(
             name = "Videos",
             icon = Icons.Outlined.Videocam
@@ -44,13 +44,13 @@ fun HomeScreenUI(modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState(pageCount = {tabs.size})
 
     val scope = rememberCoroutineScope()
-    Scaffold {
+
         Column {
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
                 modifier = modifier.fillMaxWidth()
             ) {
-                it
+
                 tabs.forEachIndexed { index, tabItem ->
                     Tab(
                         selected = pagerState.currentPage == index,
@@ -61,6 +61,7 @@ fun HomeScreenUI(modifier: Modifier = Modifier) {
                         },
                         unselectedContentColor = Color.DarkGray,
                         selectedContentColor = Color.Black,
+                        modifier = modifier.fillMaxWidth()
 //                    modifier = modifier.clickable()
                     ) {
                         Column(
@@ -71,18 +72,14 @@ fun HomeScreenUI(modifier: Modifier = Modifier) {
                         }
                     }
                 }
-
-
             }
             HorizontalPager(state = pagerState) {
                 when (it) {
                     0 -> FoldersScreenUI()
-                    1 -> VideosScreenUI()
+                    1 -> VideosScreenUI(navController = navController,viewModel = viewModel)
                 }
             }
-            Text(text = "Home Screen")
+
         }
     }
-}
-
 data class TabItem(val name : String , val icon : ImageVector)

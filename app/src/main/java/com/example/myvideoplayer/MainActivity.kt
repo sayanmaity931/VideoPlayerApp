@@ -14,19 +14,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myvideoplayer.ui.theme.MyVideoPlayerTheme
+import com.example.myvideoplayer.ui_layer.navigation.AppNavigation
 import com.example.myvideoplayer.ui_layer.screens.HomeScreenUI
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MyVideoPlayerTheme {
-            Box (
-                modifier = Modifier.fillMaxSize()
-                ){
-                HomeScreenUI()
-            }
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                        AppNavigation()
+                    }
+                }
             }
         }
     }

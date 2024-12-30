@@ -7,5 +7,5 @@ import androidx.compose.ui.Modifier
 @Composable
 fun FoldersScreenUI(modifier: Modifier = Modifier) {
 
-    Text(text = "Folders Screen")
+        Text(text = "Folder Screen")
 }
