@@ -17,7 +17,6 @@ fun SplashScreenUi(modifier: Modifier = Modifier , navController: NavController)
         contentAlignment = Alignment.Center
     ){
         CircularProgressIndicator()
-
     }
 
     Log.d("TAG","Hi I am in SplashScreen")

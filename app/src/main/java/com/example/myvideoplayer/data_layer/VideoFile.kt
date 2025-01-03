@@ -1,5 +1,8 @@
 package com.example.myvideoplayer.data_layer
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class VideoFile (
 
     val id : String?,

@@ -21,29 +21,26 @@ fun ExoPlayerScreenUI(videoUri : String) {
             prepare()
             playWhenReady = true
             play()
-             }
         }
+    }
 
     Column {
-        DisposableEffect(
-            AndroidView(
-                 factory = {
-                    PlayerView(context).apply {
-                         player = exoPlayer
-                     }
-                 },
-                 update = {
-                     it.player = exoPlayer
-                 }
-             )
-        ){
+        AndroidView(
+            factory = {
+                PlayerView(context).apply {
+                    player = exoPlayer
+                }
+            },
+            update = {
+                it.player = exoPlayer
+            }
+        )
+        DisposableEffect(Unit){
             onDispose {
                 exoPlayer.release()
             }
         }
     }
-
-
 }
 
 

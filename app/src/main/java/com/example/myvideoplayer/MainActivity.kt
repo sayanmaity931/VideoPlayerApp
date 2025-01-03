@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyVideoPlayerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    Box(modifier = Modifier.fillMaxSize().padding( bottom = innerPadding.calculateBottomPadding())) {
                         AppNavigation()
                     }
                 }

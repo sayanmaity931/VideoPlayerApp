@@ -20,6 +20,9 @@ class MyViewModel @Inject constructor(val application: Application ,private val 
     private val _getAllVideos = MutableStateFlow(GetAllVideosState())
     val getAllVideos = _getAllVideos.asStateFlow()
 
+    private val _getVideoByFolder = MutableStateFlow(GetVideoByFolderState())
+    val getVideoByFolder = _getVideoByFolder.asStateFlow()
+
     fun loadAllVideos() {
         Log.d("TAG", "loadAllVideos called")
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,13 +48,38 @@ class MyViewModel @Inject constructor(val application: Application ,private val 
         }
     }
 
+    fun getVideoByFolder() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.getVideoByFolder(application).collect{
+                when (it) {
+                    is State2.Success -> {
+                        _getVideoByFolder.value = GetVideoByFolderState(data = it.data , isLoading = false)
+                    }
+                    is State2.Error -> {
+                        _getVideoByFolder.value = GetVideoByFolderState(error = it.message , isLoading = false)
+                    }
+                    is State2.Loading -> {
+                        _getVideoByFolder.value = GetVideoByFolderState(isLoading = true)
+                    }
+                }
+            }
+        }
+    }
+
     init {
         loadAllVideos()
+        getVideoByFolder()
         Log.d("TAG", "ViewModel Initialized")
     }
 }
 data class GetAllVideosState(
     val isLoading : Boolean = false,
     val data : List<VideoFile> = emptyList(),
+    val error : String? = ""
+)
+
+data class GetVideoByFolderState(
+    val isLoading : Boolean = false,
+    val data : Map<String, List<VideoFile>> = emptyMap(),
     val error : String? = ""
 )

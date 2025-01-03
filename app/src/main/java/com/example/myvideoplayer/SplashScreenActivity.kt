@@ -1,6 +1,7 @@
 package com.example.myvideoplayer
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,11 +14,13 @@ import com.example.myvideoplayer.ui_layer.view_model.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         // Initialize the ViewModel
         viewModel = ViewModelProvider(this).get(MyViewModel::class.java)

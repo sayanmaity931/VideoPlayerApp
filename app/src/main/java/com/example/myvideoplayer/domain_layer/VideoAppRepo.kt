@@ -11,5 +11,4 @@ interface VideoAppRepo {
 
     suspend fun getVideoByFolder(application: Application): Flow<State2<Map<String, List<VideoFile>>>>
 
-
 }
